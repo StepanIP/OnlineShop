@@ -1,9 +1,6 @@
 package org.example.OnlineShop.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,7 +11,9 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(of = {"id"})
+@Builder
 public class User {
 
     @Id
@@ -63,4 +62,6 @@ public class User {
 
     @ManyToMany
     private List<Phone> phoneList;
+
+
 }
