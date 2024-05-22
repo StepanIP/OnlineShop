@@ -1,0 +1,47 @@
+<div th:fragment="phone-item (phone)" class="col-lg-3 d-flex align-items-stretch">
+    <div class="card mb-5 shadow" th:if="${phone.getFilename()}">
+        <img th:src="@{/img/{path} (path = ${phone.getFilename()})}" class="rounded mx-auto w-50">
+        <div class="card-body text-center">
+            <h5 th:text="${phone.getPhoneTitle()}"></h5>
+            <h6>$<span th:text="${phone.getPrice()}"></span>.00</h6>
+        </div>
+        <div class="text-center align-items-end mb-3">
+            <a th:href="@{/phone/{phoneId} (phoneId = ${phone.getId()})}" class="btn btn-dark">
+                SHOW MORE
+            </a>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="brand-item" class="col-2 float-left">
+    <a th:href="${'/phone?brands=' + brand}">
+        <img class="img-fluid" th:src="${src}" alt="">
+    </a>
+</div>
+
+<div th:fragment="phones-brand-checkbox(brand)" class="checkbox">
+    <label>
+        <input th:value="${brand}" type="checkbox" name="brands" onChange="this.form.submit()"
+               th:checked="${searchRequest.getBrands() != null ? #arrays.contains(searchRequest.getBrands(), brand) : false}"/>
+        <span class="cr"><i class="cr-icon fas fa-check"></i></span>
+        <th:block th:text="${brand}"></th:block>
+    </label>
+</div>
+
+<div th:fragment="phones-gender-checkbox(gender)" class="checkbox">
+    <label>
+        <input th:value="${gender}" type="checkbox" name="genders" onChange="this.form.submit()"
+               th:checked="${searchRequest.getGenders() != null ? #arrays.contains(searchRequest.getGenders(), gender) : false}"/>
+        <span class="cr"><i class="cr-icon fas fa-check"></i></span>
+        <th:block th:text="${#strings.capitalize(gender)}"></th:block>
+    </label>
+</div>
+
+<div th:fragment="phones-price-checkbox" class="checkbox">
+    <label>
+        <input th:value="${startingPrice}" type="radio" name="price" onChange="this.form.submit()"
+               th:checked="${searchRequest.getPrice() != null ? startingPrice == searchRequest.getPrice() : false}"/>
+        <span class="cr"><i class="cr-icon fas fa-check"></i></span>
+        <th:block th:text="${startingPrice == 0} ? 'any' : ${startingPrice} + ' - ' + ${endingPrice} + ' $'"></th:block>
+    </label>
+</div>

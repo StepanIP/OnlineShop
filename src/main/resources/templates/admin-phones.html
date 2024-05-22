@@ -1,0 +1,67 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common-fragments :: head"></head>
+<body>
+<div th:insert="~{fragments/common-fragments :: scripts}"></div>
+<div th:replace="fragments/common-fragments :: navbar"></div>
+<div id="container" class="bg-light">
+    <div class="py-5">
+        <div class="container py-5 bg-white shadow-sm card-height">
+            <div class="row mx-3">
+                <th:block th:replace="fragments/account-fragments :: account-sidebar"/>
+                <div class="col-md-10">
+                    <th:block th:replace="fragments/common-fragments :: info-title(
+                        text='List of phones',
+                        icon='fas fa-list ml-2 mr-2'
+                    )"/>
+                    <th:block th:replace="fragments/common-fragments :: alert-message"/>
+                    <form class="my-3" action="/admin/phones/search" method="get" style="justify-content: center">
+                        <div th:insert="~{fragments/common-fragments :: search(
+                            options=(${ {
+                                { value: 'brand', text: 'Brand' },
+                                { value: 'phoneTitle', text: 'Phone title' },
+                                { value: 'country', text: 'Manufacturer country' }
+                            } })
+                        )}"></div>
+                    </form>
+                    <div class="mt-3" th:insert="~{fragments/common-fragments :: pagination}"></div>
+                    <form method="get" action="/static">
+                        <div class="row" th:fragment="list">
+                            <th:block th:if="${page.getContent().size() == 0}"
+                                      th:insert="~{fragments/common-fragments :: empty-result(text='Phones not found')}"/>
+                            <div class="col-lg-3"
+                                 th:unless="${page.getContent().size() == 0}"
+                                 th:each="phone : ${page.getContent()}">
+                                <div class="card mb-5 phone_list_item_wrapper shadow"
+                                     th:if="${phone.getFilename()}">
+                                    <div class="phone_list_item_image_wrapper">
+                                        <img th:src="@{/img/{path} (path = ${phone.getFilename()})}"
+                                             class="rounded mx-auto w-50 phone_list_item_image">
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h6 th:text="${phone.getPhoneTitle()}"></h6>
+                                        <h6 th:text="${phone.getBrand()}"></h6>
+                                        <h6>$<span th:text="${phone.getPrice()}"></span>.00</h6>
+                                    </div>
+                                    <div class="text-center align-items-end mb-3">
+                                        <a th:href="@{/admin/phone/{phoneId} (phoneId = ${phone.getId()})}"
+                                           class="btn btn-dark">
+                                            <i class="fas fa-edit"></i>
+                                            Edit
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="mt-3"
+                         th:if="${page.getContent().size() != 0}"
+                         th:insert="~{fragments/common-fragments :: pagination}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:insert="~{fragments/common-fragments :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common-fragments :: head"></head>
+<body>
+<div th:insert="~{fragments/common-fragments :: scripts}"></div>
+<div th:replace="fragments/common-fragments :: navbar"></div>
+<div id="container" class="bg-light">
+    <div class="py-5">
+        <div class="container py-5 bg-white shadow-sm card-height">
+            <h5>
+                <i class="fas fa-info-circle mr-2"></i>
+                Contacts
+            </h5>
+            <br>
+            <p><b>Mobile:</b> +555 555 55 55<br/>
+                <b>E-mail:</b> nedam@gmail.com</p>
+            <br>
+            <h6>Working Time</h6>
+            <p>
+                The online store is open from 08:00 to 20:00 without breaks and weekends. <br/>
+                Online orders are accepted around the clock.
+            </p>
+            <br>
+            <h6>Delivery</h6>
+            <p>Delivery of orders comes through our reliable courier service, ensuring prompt and secure delivery to your doorstep. We strive to deliver your orders with the utmost care and efficiency, providing you with the best possible service.</p>
+            <br>
+            <h6>Visit Us</h6>
+            <p>If you prefer a personal touch, feel free to visit our physical store located at [Your Store Address]. Our dedicated staff will be delighted to assist you in person, offering a hands-on shopping experience and expert advice on our products.</p>
+        </div>
+
+    </div>
+</div>
+<footer th:insert="~{fragments/common-fragments :: footer}"></footer>
+</body>
+</html>

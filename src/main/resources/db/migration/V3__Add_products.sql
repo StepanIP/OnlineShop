@@ -1,0 +1,12 @@
+INSERT INTO phones (id, country, description, filename, phone_title, brand, price, amount, diaplay, _memory, ram, processor, accumulator, camera, _case)
+VALUES
+    (1, 'USA', 'Latest iPhone model', '2989121805.jpg', 'iPhone 13 PRO', 'Apple', 1299, 'In stock', '6.1 inches Super Retina XDR', '256GB', '6GB', 'A15 Bionic', '3095 mAh', '12 MP triple-camera system', 'Ceramic Shield and Surgical-Grade Stainless Steel'),
+    (2, 'South Korea', 'Flagship Android device', 'galaxyS21.jpg', 'Galaxy S21', 'Samsung', 899, 'Available', '6.2 inches Dynamic AMOLED 2X', '256GB', '8GB', 'Exynos 2100', '4000 mAh', '108 MP triple-camera system', 'Gorilla Glass and Aluminum Frame'),
+    (3, 'China', 'Budget-friendly smartphone', 'redmiNote10.jpg', 'Redmi Note 10', 'Xiomi', 249, 'In stock', '6.43 inches Super AMOLED', '64GB', '4GB', 'Snapdragon 678', '5000 mAh', '48 MP quad-camera system', 'Plastic'),
+    (4, 'China', 'Powerful gaming phone', 'rogPhone6.jpg', 'ROG Phone 6', 'ASUS', 1299, 'Limited', '6.78 inches AMOLED', '512GB', '16GB', 'Snapdragon 888', '6000 mAh', '64 MP triple-camera system', 'Metal and Glass'),
+    (5, 'Japan', 'Compact flagship', 'xperia5III.jpg', 'Xperia 5 III', 'Sony', 899, 'In stock', '6.1 inches HDR OLED', '128GB', '6GB', 'Snapdragon 888', '4500 mAh', '12 MP triple-camera system', 'Corning Gorilla Glass 6'),
+    (6, 'South Korea', 'Sleek and slim device', 'g8.jpg', 'G8 ThinQ', 'LG', 799, 'Available', '6.1 inches OLED', '128GB', '6GB', 'Snapdragon 855', '3550 mAh', '16 MP dual-camera system', 'Glass and Aluminum Frame'),
+    (7, 'China', 'Fashion-forward design', 'findX3.jpg', 'Find X3', 'Oppo', 1099, 'Limited', '6.7 inches LTPO AMOLED', '256GB', '12GB', 'Snapdragon 870', '4500 mAh', '50 MP quad-camera system', 'Glass and Ceramic'),
+    (8, 'China', 'Camera-centric phone', 'pixel6.jpg', 'Pixel 6', 'Google', 799, 'Available', '6.4 inches OLED', '128GB', '6GB', 'Google Tensor', '4600 mAh', '50 MP dual-camera system', 'Aluminum and Gorilla Glass Victus'),
+    (9, 'China', 'Sleek and slim device', 'x60.jpg', 'X60', 'Vivo', 699, 'In stock', '6.56 inches AMOLED', '128GB', '8GB', 'Exynos 1080', '4300 mAh', '48 MP quad-camera system', 'Glass and Aluminum Frame'),
+    (10, 'China', 'Flagship killer', 'mi11.jpg', 'Mi 11', 'Xiomi', 799, 'Limited', '6.81 inches AMOLED', '128GB', '8GB', 'Snapdragon 888', '4600 mAh', '108 MP triple-camera system', 'Glass and Aluminum Frame');

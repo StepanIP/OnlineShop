@@ -1,0 +1,105 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common-fragments :: head"></head>
+<body>
+<div th:insert="~{fragments/common-fragments :: scripts}"></div>
+<div th:replace="fragments/common-fragments :: navbar"></div>
+<div class="bg-light">
+    <div class="py-5">
+        <div class="container py-5 bg-white shadow-sm card-height">
+            <div class="row mx-3">
+                <th:block th:replace="fragments/account-fragments :: account-sidebar"/>
+                <div class="col-md-9 mb-5">
+                    <th:block th:replace="fragments/common-fragments :: info-title(text='Edit phone', icon='fas fa-edit mr-2')"/>
+                    <form method="post" action="/admin/edit/phone" enctype="multipart/form-data">
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <th:block th:replace="fragments/account-fragments :: edit-phone-input(
+                                    title='Phone title',
+                                    name='phoneTitle',
+                                    value=(${phone.getPhoneTitle()}),
+                                    error=(${phoneTitleError})
+                                )"/>
+                                <th:block th:replace="fragments/account-fragments :: edit-phone-input(
+                                    title='Brand',
+                                    name='brand',
+                                    value=(${phone.getBrand()}),
+                                    error=(${brandError})
+                                )"/>
+                                <th:block th:replace="fragments/account-fragments :: edit-phone-input(
+                                    title='Release year',
+                                    name='year',
+                                    value=(${phone.getYear()}),
+                                    error=(${yearError})
+                                )"/>
+                                <th:block th:replace="fragments/account-fragments :: edit-phone-input(
+                                    title='Country',
+                                    name='country',
+                                    value=(${phone.getCountry()}),
+                                    error=(${countryError})
+                                )"/>
+                                <th:block th:replace="fragments/account-fragments :: edit-phone-select(
+                                    title='Phone type',
+                                    name='type',
+                                    options=(${ {'Eau de Parfum', 'Eau de Toilette'} }),
+                                    value=(${phone.getType()}),
+                                    error=(${typeError})
+                                )"/>
+                                <th:block th:replace="fragments/account-fragments :: edit-phone-input(
+                                    title='Volume',
+                                    name='volume',
+                                    value=(${phone.getVolume()}),
+                                    error=(${volumeError})
+                                )"/>
+                                <th:block th:replace="fragments/account-fragments :: edit-phone-select(
+                                    title='Gender',
+                                    name='phoneGender',
+                                    options=(${ {'male', 'female'} }),
+                                    value=(${phone.getPhoneGender()}),
+                                    error=(${phoneGenderError})
+                                )"/>
+                                <th:block th:replace="fragments/account-fragments :: edit-phone-input(
+                                    title='Top notes',
+                                    name='fragranceTopNotes',
+                                    value=(${phone.getFragranceTopNotes()}),
+                                    error=(${fragranceTopNotesError})
+                                )"/>
+                                <th:block th:replace="fragments/account-fragments :: edit-phone-input(
+                                    title='Heart notes',
+                                    name='fragranceMiddleNotes',
+                                    value=(${phone.getFragranceMiddleNotes()}),
+                                    error=(${fragranceMiddleNotesError})
+                                )"/>
+                                <th:block th:replace="fragments/account-fragments :: edit-phone-input(
+                                    title='Base notes',
+                                    name='fragranceBaseNotes',
+                                    value=(${phone.getFragranceBaseNotes()}),
+                                    error=(${fragranceBaseNotesError})
+                                )"/>
+                                <th:block th:replace="fragments/account-fragments :: edit-phone-input(
+                                    title='Price',
+                                    name='price',
+                                    value=(${phone.getPrice()}),
+                                    error=(${priceError})
+                                )"/>
+                            </div>
+                            <div class="col-md-6">
+                                <div th:if="${phone.getFilename()}">
+                                    <img th:src="@{/img/{path} (path = ${phone.getFilename()})}"
+                                         class="rounded mx-auto w-100 mb-2"/>
+                                </div>
+                                <input type="file" name="file"/>
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" th:value="${phone.getId()}"/>
+                        <input type="hidden" name="filename" th:value="${phone.getFilename()}"/>
+                        <th:block th:replace="fragments/common-fragments :: icon-button(text='Edit', icon='fas fa-edit mr-2')"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:insert="~{fragments/common-fragments :: footer}"></footer>
+</body>
+</html>

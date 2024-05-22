@@ -1,0 +1,84 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common-fragments :: head"></head>
+<body>
+<div th:insert="~{fragments/common-fragments :: scripts}"></div>
+<div th:replace="fragments/common-fragments :: navbar"></div>
+<div id="container" class="bg-light">
+    <div class="container pt-5 pb-5 bg-white shadow-sm">
+        <div class="row">
+            <div class="col-md-5">
+                <img th:src="@{/img/{path} (path = ${phone.getFilename()})}" class="rounded mx-auto w-100">
+            </div>
+            <div class="col-md-7">
+                <h2 th:text="${phone.getPhoneTitle()}"></h2>
+                <p>Product code: <span th:text="${phone.getId()}"></span></p>
+                <p class="product-stock" style="color: #54C0A1">In Stock</p>
+                <div class="row ml-1">
+                    <h6 class="mr-5">
+                        $<span th:text="${phone.getPrice()}"></span>.00
+                    </h6>
+                    <form action="/cart/add" method="post">
+                        <button type="submit" name="phoneId" class="btn btn-success mx-3"
+                                th:value="${phone.getId()}">
+                            <i class="fas fa-cart-plus mr-2 fa-lg"></i>
+                            ADD TO CART
+                        </button>
+                    </form>
+                </div>
+                <br>
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td>Phone title:</td>
+                        <td th:text="${phone.getPhoneTitle()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Brand:</td>
+                        <td th:text="${phone.getBrand()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Phone type:</td>
+                        <td th:text="${phone.getAmount()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Description:</td>
+                        <td><span th:text="${phone.getDescription()}"></span> ml.</td>
+                    </tr>
+                    <tr>
+                        <td>Processor:</td>
+                        <td th:text="${phone.getProcessor()}"></td>
+                    </tr>
+                    <tr>
+                        <td>RAM:</td>
+                        <td th:text="${phone.getRam()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Memory:</td>
+                        <td th:text="${phone.getMemory()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Display:</td>
+                        <td th:text="${phone.getDiaplay()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Case:</td>
+                        <td th:text="${phone.get_case()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Accumulator:</td>
+                        <td th:text="${phone.getAccumulator()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Country:</td>
+                        <td th:text="${phone.getCountry()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:insert="~{fragments/common-fragments :: footer}"></footer>
+</body>
+</html>

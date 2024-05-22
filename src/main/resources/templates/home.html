@@ -1,0 +1,112 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common-fragments :: head"></head>
+<body>
+<div th:insert="~{fragments/common-fragments :: scripts}"></div>
+<div th:replace="fragments/common-fragments :: navbar"></div>
+<div class="container-fluid bg-black header-top d-none d-md-block pb-5 pt-5">
+    <img id="logo-main" src="https://img.freepik.com/premium-psd/neon-cyber-monday-flyer-template_1005441-504.jpg?w=1380" class="rounded mx-auto d-block"/>
+</div>
+<div id="container">
+    <div class="container text-center my-3 mt-5">
+        <h3>Brands</h3>
+        <br/>
+        <div id="brandCarousel" class="carousel slide w-100" data-ride="carousel" style="text-align: center;">
+            <div class="carousel-inner w-100" role="listbox">
+                <div class="carousel-item row active">
+                    <th:block
+                            th:replace="fragments/phones-fragments :: brand-item(brand='Apple', src='https://yt3.googleusercontent.com/ytc/AIf8zZQOIWnUw2a-YbGNijRepNH41bkXdlG_7QqeKoZsyg=s900-c-k-c0x00ffffff-no-rj')"/>
+                    <th:block
+                            th:replace="fragments/phones-fragments :: brand-item(brand='Samsung', src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEWD2wYX7n7seiG65wM2hkTPdbPTZGFTHPow&usqp=CAU')"/>
+                    <th:block
+                            th:replace="fragments/phones-fragments :: brand-item(brand='Xiomi', src='https://static.vecteezy.com/system/resources/previews/020/335/982/original/mi-xiaomi-logo-mi-xiaomi-icon-free-free-vector.jpg')"/>
+                    <th:block
+                            th:replace="fragments/phones-fragments :: brand-item(brand='HUAWEI', src='https://cdn-icons-png.freepik.com/512/5969/5969135.png')"/>
+                    <th:block
+                            th:replace="fragments/phones-fragments :: brand-item(brand='Sony', src='data:image/png;base64,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')"/>
+                    <th:block
+                            th:replace="fragments/phones-fragments :: brand-item(brand='LG', src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4Px8w4ANCyGUECkZp0t9SkM2bDRQMcFndKQ&usqp=CAU')"/>
+                </div>
+                <div class="carousel-item row active">
+                    <th:block
+                            th:replace="fragments/phones-fragments :: brand-item(brand='Apple', src='https://yt3.googleusercontent.com/ytc/AIf8zZQOIWnUw2a-YbGNijRepNH41bkXdlG_7QqeKoZsyg=s900-c-k-c0x00ffffff-no-rj')"/>
+                    <th:block
+                            th:replace="fragments/phones-fragments :: brand-item(brand='Samsung', src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEWD2wYX7n7seiG65wM2hkTPdbPTZGFTHPow&usqp=CAU')"/>
+                    <th:block
+                            th:replace="fragments/phones-fragments :: brand-item(brand='Xiomi', src='https://static.vecteezy.com/system/resources/previews/020/335/982/original/mi-xiaomi-logo-mi-xiaomi-icon-free-free-vector.jpg')"/>
+                    <th:block
+                            th:replace="fragments/phones-fragments :: brand-item(brand='HUAWEI', src='https://cdn-icons-png.freepik.com/512/5969/5969135.png')"/>
+                    <th:block
+                            th:replace="fragments/phones-fragments :: brand-item(brand='Sony', src='data:image/png;base64,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')"/>
+                    <th:block
+                            th:replace="fragments/phones-fragments :: brand-item(brand='LG', src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4Px8w4ANCyGUECkZp0t9SkM2bDRQMcFndKQ&usqp=CAU')"/>
+                </div>
+                <div class="carousel-item row active">
+                    <th:block
+                            th:replace="fragments/phones-fragments :: brand-item(brand='Apple', src='https://yt3.googleusercontent.com/ytc/AIf8zZQOIWnUw2a-YbGNijRepNH41bkXdlG_7QqeKoZsyg=s900-c-k-c0x00ffffff-no-rj')"/>
+                    <th:block
+                            th:replace="fragments/phones-fragments :: brand-item(brand='Samsung', src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEWD2wYX7n7seiG65wM2hkTPdbPTZGFTHPow&usqp=CAU')"/>
+                    <th:block
+                            th:replace="fragments/phones-fragments :: brand-item(brand='Xiomi', src='https://static.vecteezy.com/system/resources/previews/020/335/982/original/mi-xiaomi-logo-mi-xiaomi-icon-free-free-vector.jpg')"/>
+                    <th:block
+                            th:replace="fragments/phones-fragments :: brand-item(brand='HUAWEI', src='https://cdn-icons-png.freepik.com/512/5969/5969135.png')"/>
+                    <th:block
+                            th:replace="fragments/phones-fragments :: brand-item(brand='Sony', src='data:image/png;base64,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')"/>
+                    <th:block
+                            th:replace="fragments/phones-fragments :: brand-item(brand='LG', src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4Px8w4ANCyGUECkZp0t9SkM2bDRQMcFndKQ&usqp=CAU')"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <div class="container text-center my-3">
+        <h4>Personally recommended</h4>
+    </div>
+    <div class="container mt-5">
+        <form method="get" action="/phone/popular">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="phoneCarousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="container">
+                                    <div class="row" th:fragment="list">
+                                        <th:block th:replace="fragments/phones-fragments :: phone-item(${phones[0]})"/>
+                                        <th:block th:replace="fragments/phones-fragments :: phone-item(${phones[1]})"/>
+                                        <th:block th:replace="fragments/phones-fragments :: phone-item(${phones[2]})"/>
+                                        <th:block th:replace="fragments/phones-fragments :: phone-item(${phones[3]})"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="container">
+                                    <div class="row" th:fragment="list">
+                                        <th:block th:replace="fragments/phones-fragments :: phone-item(${phones[4]})"/>
+                                        <th:block th:replace="fragments/phones-fragments :: phone-item(${phones[5]})"/>
+                                        <th:block th:replace="fragments/phones-fragments :: phone-item(${phones[6]})"/>
+                                        <th:block th:replace="fragments/phones-fragments :: phone-item(${phones[7]})"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="container">
+                                    <div class="row" th:fragment="list">
+                                        <th:block th:replace="fragments/phones-fragments :: phone-item(${phones[8]})"/>
+                                        <th:block th:replace="fragments/phones-fragments :: phone-item(${phones[9]})"/>
+                                        <th:block th:replace="fragments/phones-fragments :: phone-item(${phones[10]})"/>
+                                        <th:block th:replace="fragments/phones-fragments :: phone-item(${phones[11]})"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <th:block th:replace="fragments/common-fragments :: carousel-indicators('#phoneCarousel')"/>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<footer th:insert="~{fragments/common-fragments :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common-fragments :: head"></head>
+<body>
+<div th:insert="~{fragments/common-fragments :: scripts}"></div>
+<div th:replace="fragments/common-fragments :: navbar"></div>
+<div id="container" class="bg-light">
+    <div class="container d-flex bg-white shadow-sm">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Phones</h3>
+            </div>
+            <form action="/phone" method="get">
+                <ul class="list-unstyled components">
+                    <h5>Brand</h5>
+                    <li class="active mb-2" id="homeSubmenu">
+                        <ul class="list-unstyled">
+                            <li th:insert="fragments/phones-fragments :: phones-brand-checkbox('Samsung')"></li>
+                            <li th:insert="fragments/phones-fragments :: phones-brand-checkbox('HUAWEI')"></li>
+                            <li th:insert="fragments/phones-fragments :: phones-brand-checkbox('Apple')"></li>
+                            <li th:insert="fragments/phones-fragments :: phones-brand-checkbox('Sony')"></li>
+                            <li th:insert="fragments/phones-fragments :: phones-brand-checkbox('LG')"></li>
+                            <li th:insert="fragments/phones-fragments :: phones-brand-checkbox('Oppo')"></li>
+                            <li th:insert="fragments/phones-fragments :: phones-brand-checkbox('Xiomi')"></li>
+                            <li th:insert="fragments/phones-fragments :: phones-brand-checkbox('Vivo')"></li>
+                            <li th:insert="fragments/phones-fragments :: phones-brand-checkbox('Google')"></li>
+                        </ul>
+                    </li>
+                    <br/>
+                    <h5>Price</h5>
+                    <li class="active mb-2">
+                        <ul class="list-unstyled">
+                            <li th:insert="fragments/phones-fragments :: phones-price-checkbox(startingPrice=0, endingPrice=500)"></li>
+                            <li th:insert="fragments/phones-fragments :: phones-price-checkbox(startingPrice=500, endingPrice=750)"></li>
+                            <li th:insert="fragments/phones-fragments :: phones-price-checkbox(startingPrice=750, endingPrice=1000)"></li>
+                            <li th:insert="fragments/phones-fragments :: phones-price-checkbox(startingPrice=1000, endingPrice=1500)"></li>
+                            <li th:insert="fragments/phones-fragments :: phones-price-checkbox(startingPrice=1500, endingPrice=2000)"></li>
+                        </ul>
+                    </li>
+                </ul>
+            </form>
+        </nav>
+        <div class="container mb-5">
+            <div class="container-fluid mt-5 ml-1">
+                <form action="/phone/search" method="get" style="justify-content: center">
+                    <th:block th:replace="~{fragments/common-fragments :: search(
+                        options=(${ {
+                            { value: 'brand', text: 'Brand' },
+                            { value: 'phoneTitle', text: 'Phone title' },
+                            { value: 'country', text: 'Manufacturer country' }
+                        } })
+                    )}"/>
+                </form>
+            </div>
+            <div class="mt-4 ml-1">
+                <th:block th:replace="~{fragments/common-fragments :: pagination(class='mx-3')}"/>
+                <div class="container-fluid">
+                    <div class="row" th:fragment="list">
+                        <th:block th:if="${page.getContent().size() == 0}"
+                                  th:insert="~{fragments/common-fragments :: empty-result(text='Phones not found')}"/>
+                        <th:block th:unless="${page.getContent().size() == 0}" th:each="phone : ${page.getContent()}">
+                            <th:block th:replace="fragments/phones-fragments :: phone-item(${phone})"/>
+                        </th:block>
+                    </div>
+                </div>
+                <th:block th:if="${page.getContent().size() != 0}">
+                    <th:block th:replace="~{fragments/common-fragments :: pagination(class='mx-3')}"/>
+                </th:block>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:insert="~{fragments/common-fragments :: footer}"></footer>
+</body>
+</html>
