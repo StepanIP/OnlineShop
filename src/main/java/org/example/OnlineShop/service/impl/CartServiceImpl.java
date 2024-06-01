@@ -1,5 +1,8 @@
 package org.example.OnlineShop.service.impl;
 
+import com.google.cloud.firestore.CollectionReference;
+import com.google.cloud.firestore.Firestore;
+import com.google.firebase.cloud.FirestoreClient;
 import org.example.OnlineShop.domain.Phone;
 import org.example.OnlineShop.domain.User;
 import org.example.OnlineShop.repository.PhoneRepository;

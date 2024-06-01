@@ -13,7 +13,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"id"})
-@Builder
 public class User {
 
     @Id
@@ -62,6 +61,4 @@ public class User {
 
     @ManyToMany
     private List<Phone> phoneList;
-
-
 }

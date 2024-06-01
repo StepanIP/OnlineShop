@@ -1,5 +1,8 @@
 package org.example.OnlineShop.service.impl;
 
+import com.google.cloud.firestore.CollectionReference;
+import com.google.cloud.firestore.Firestore;
+import com.google.firebase.cloud.FirestoreClient;
 import org.example.OnlineShop.constants.ErrorMessage;
 import org.example.OnlineShop.constants.SuccessMessage;
 import org.example.OnlineShop.domain.Order;
@@ -9,10 +12,10 @@ import org.example.OnlineShop.dto.request.EditUserRequest;
 import org.example.OnlineShop.dto.request.SearchRequest;
 import org.example.OnlineShop.dto.response.MessageResponse;
 import org.example.OnlineShop.repository.OrderRepository;
-import org.example.OnlineShop.repository.UserRepository;
 import org.example.OnlineShop.security.UserPrincipal;
 import org.example.OnlineShop.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,18 +23,28 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.concurrent.ExecutionException;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-
-    private final UserRepository userRepository;
     private final OrderRepository orderRepository;
     private final PasswordEncoder passwordEncoder;
+
+    private final String COLLECTION_NAME = "user";
+    private final Firestore firestore = FirestoreClient.getFirestore();;
 
     @Override
     public User getAuthenticatedUser() {
         UserPrincipal principal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userRepository.findByEmail(principal.getUsername());
+        CollectionReference collection = firestore.collection(COLLECTION_NAME);
+        User user;
+        try {
+            user = collection.document(principal.getUsername()).get().get().toObject(User.class);
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+        return user;
     }
 
     @Override

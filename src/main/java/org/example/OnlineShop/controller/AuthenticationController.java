@@ -35,7 +35,7 @@ public class AuthenticationController {
 
     @GetMapping("/reset/{code}")
     public String resetPassword(@PathVariable String code, Model model) {
-        model.addAttribute("email", authService.getEmailByPasswordResetCode(code));
+        model.addAttribute("email", authService.getEmailByPasswordResetCode(code).get());
         return Pages.RESET_PASSWORD;
     }
 

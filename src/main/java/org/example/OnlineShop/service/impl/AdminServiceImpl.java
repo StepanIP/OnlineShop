@@ -1,5 +1,11 @@
 package org.example.OnlineShop.service.impl;
 
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.CollectionReference;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
+import com.google.firebase.cloud.FirestoreClient;
 import org.example.OnlineShop.constants.ErrorMessage;
 import org.example.OnlineShop.constants.SuccessMessage;
 import org.example.OnlineShop.domain.Order;
@@ -11,13 +17,13 @@ import org.example.OnlineShop.dto.response.MessageResponse;
 import org.example.OnlineShop.dto.response.UserInfoResponse;
 import org.example.OnlineShop.repository.OrderRepository;
 import org.example.OnlineShop.repository.PhoneRepository;
-import org.example.OnlineShop.repository.UserRepository;
 import org.example.OnlineShop.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -27,7 +33,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @RequiredArgsConstructor
@@ -36,10 +45,13 @@ public class AdminServiceImpl implements AdminService {
     @Value("${upload.path}")
     private String uploadPath;
 
-    private final UserRepository userRepository;
     private final PhoneRepository phoneRepository;
     private final OrderRepository orderRepository;
     private final ModelMapper modelMapper;
+
+    private final String COLLECTION_NAME = "user";
+    private final Firestore firestore = FirestoreClient.getFirestore();
+    CollectionReference collection = firestore.collection(COLLECTION_NAME);
 
     @Override
     public Page<Phone> getPhones(Pageable pageable) {
@@ -53,12 +65,60 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Page<User> getUsers(Pageable pageable) {
-        return userRepository.findAll(pageable);
+        // Get all documents from the collection
+        ApiFuture<QuerySnapshot> future = collection.get();
+        List<QueryDocumentSnapshot> documents = null;
+        try {
+            documents = future.get().getDocuments();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        // Convert documents into User objects and add them to a list
+        List<User> users = new ArrayList<>();
+        for (QueryDocumentSnapshot document : documents) {
+            users.add(document.toObject(User.class));
+        }
+
+        // Create a Page object from the list
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), users.size());
+
+        return new PageImpl<>(users.subList(start, end), pageable, users.size());
     }
 
     @Override
     public Page<User> searchUsers(SearchRequest request, Pageable pageable) {
-        return userRepository.searchUsers(request.getSearchType(), request.getText(), pageable);
+        // Get all documents from the collection
+        ApiFuture<QuerySnapshot> future = collection.get();
+        List<QueryDocumentSnapshot> documents = null;
+        try {
+            documents = future.get().getDocuments();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        // Filter documents based on search request and convert them into User objects
+        List<User> users = new ArrayList<>();
+        for (QueryDocumentSnapshot document : documents) {
+            User user = document.toObject(User.class);
+            if (userMatchesSearchRequest(user, request)) {
+                users.add(user);
+            }
+        }
+
+        // Create a Page object from the list
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), users.size());
+
+        return new PageImpl<>(users.subList(start, end), pageable, users.size());
+    }
+
+    private boolean userMatchesSearchRequest(User user, SearchRequest request) {
+        String searchText = request.getText().toLowerCase();
+        return user.getEmail().toLowerCase().contains(searchText)
+               || (user.getFirstName() != null && user.getFirstName().toLowerCase().contains(searchText))
+               || (user.getLastName() != null && user.getLastName().toLowerCase().contains(searchText));
     }
 
     @Override
@@ -100,8 +160,12 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public UserInfoResponse getUserById(Long userId, Pageable pageable) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessage.USER_NOT_FOUND));
+        User user = null;
+        try {
+            user = collection.document(userId.toString()).get().get().toObject(User.class);
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
         Page<Order> orders = orderRepository.findOrderByUserId(userId, pageable);
         return new UserInfoResponse(user, orders);
     }
